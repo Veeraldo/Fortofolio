@@ -131,6 +131,44 @@ export default function Home() {
                 zIndex: 9999,
                 transition: 'width 0.1s ease'
             }} />
+            {/* MOBILE MENU */}
+<div style={{
+    position: 'fixed',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 1000,
+    display: 'none',
+    gap: '8px',
+    backgroundColor: 'rgba(17, 17, 17, 0.95)',
+    padding: '12px 20px',
+    borderRadius: '50px',
+    border: '1px solid #333'
+}} className="mobile-nav">
+    {[
+        { id: 'home', icon: '🏠' },
+        { id: 'about', icon: '👤' },
+        { id: 'work', icon: '💼' },
+        { id: 'contact', icon: '📧' }
+    ].map(({ id, icon }) => (
+        <button
+            key={id}
+            onClick={() => scrollToSection(id)}
+            style={{
+                padding: '8px 16px',
+                backgroundColor: activeSection === id ? '#fff' : 'transparent',
+                color: activeSection === id ? '#0a0a0a' : '#888',
+                border: 'none',
+                borderRadius: '50px',
+                cursor: 'pointer',
+                fontSize: '18px',
+                transition: 'all 0.3s ease'
+            }}
+        >
+            {icon}
+        </button>
+    ))}
+</div>
 
             {/* MINIMALIST NAVIGATION */}
             <nav style={{
@@ -550,7 +588,7 @@ export default function Home() {
                     style={{
                         position: 'fixed',
                         bottom: '40px',
-                        right: '40px',
+                        right: '30px',
                         width: '50px',
                         height: '50px',
                         borderRadius: '50%',

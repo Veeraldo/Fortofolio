@@ -1,6 +1,153 @@
 /* Tambahkan di globals.css - GANTI SEMUA ISI */
 
-@import "tailwindcss";
+@media (max-width: 1024px) {
+  section {
+    padding: 80px 40px !important;
+  }
+  
+  /* About section grid jadi 1 kolom */
+  section#about > div {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+  
+  /* Image profile di about */
+  section#about img {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Hide navigation dots */
+  nav[style*="right: 40px"] {
+    display: none !important;
+  }
+  
+  /* Sections padding */
+  section {
+    padding: 60px 20px !important;
+  }
+  
+  /* Hero section */
+  section#home {
+    padding: 60px 20px !important;
+    text-align: center;
+  }
+  
+  section#home > div {
+    max-width: 100% !important;
+  }
+  
+  /* Heading sizes */
+  h1 {
+    font-size: clamp(32px, 10vw, 50px) !important;
+  }
+  
+  h2 {
+    font-size: clamp(24px, 8vw, 40px) !important;
+    min-height: auto !important;
+  }
+  
+  /* About section */
+  section#about > div {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    text-align: center;
+  }
+  
+  section#about img {
+    max-width: 250px !important;
+  }
+  
+  /* Skills grid */
+  div[style*="gridTemplateColumns: 'repeat(2, 1fr)'"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Project cards */
+  .project-card {
+    padding: 30px 20px !important;
+  }
+  
+  .project-card h3 {
+    font-size: 22px !important;
+  }
+  
+  .project-card > div {
+    flex-direction: column !important;
+    gap: 20px;
+  }
+  
+  .project-arrow {
+    display: none !important;
+  }
+  
+  /* Contact section */
+  section#contact {
+    padding: 60px 20px !important;
+  }
+  
+  section#contact > div {
+    max-width: 100% !important;
+  }
+  
+  /* Social links */
+  section#contact div[style*="gap: 30px"] {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+  
+  /* Buttons */
+  button, a[style*="padding: 18px 40px"] {
+    padding: 15px 30px !important;
+    font-size: 14px !important;
+  }
+  
+  /* Back to top button */
+  .back-to-top {
+    width: 45px !important;
+    height: 45px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+  }
+}
+@media (max-width: 768px) {
+  .mobile-nav {
+    display: flex !important;
+  }
+}
+
+/* Extra Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  section {
+    padding: 40px 15px !important;
+  }
+  
+  h1 {
+    font-size: 28px !important;
+  }
+  
+  h2 {
+    font-size: 22px !important;
+  }
+  
+  p {
+    font-size: 16px !important;
+  }
+  
+  .project-card {
+    padding: 20px 15px !important;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+
 
 * {
   margin: 0;

@@ -2,7 +2,7 @@ import './globals.css';
 import Footer from './components/footer';
 
 export const metadata = {
-  title: 'My Website',
+  title: 'Veraldo',
   description: 'Fortofolio Website',
 };
 
