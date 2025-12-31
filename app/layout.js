@@ -1,5 +1,5 @@
-import Navbar from './screen/components/navbar';
-import Footer from './screen/components/footer';
+import './globals.css';
+import Footer from './components/footer';
 
 export const metadata = {
   title: 'My Website',
@@ -8,9 +8,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html>
+        <html lang="id">
             <body>
-                <Navbar />
                 <main style = {{minHeight: "80vh", padding: "16px"}}>
                     {children}
                 </main>
