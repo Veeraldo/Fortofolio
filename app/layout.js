@@ -1,4 +1,4 @@
-import Navbar from './screen/components/Navbar';
+import Navbar from './screen/components/navbar';
 import Footer from './screen/components/footer';
 
 export const metadata = {
