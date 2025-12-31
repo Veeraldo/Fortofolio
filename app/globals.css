@@ -1,220 +1,125 @@
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
+/* Tambahkan di globals.css - GANTI SEMUA ISI */
 
-.hover-float:hover {
-  animation: float 2s ease-in-out infinite;
-}
-
-/* Ring Animasi di Belakang Foto */
-.profile-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 220px;
-  height: 220px;
-  border: 3px solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  animation: pulse-ring 2s ease-out infinite;
-}
-
-@keyframes pulse-ring {
-  0% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.3);
-    opacity: 0;
-  }
-}
-
-/* Animasi Tambahan untuk Profile Image */
-.profile-image {
-  transition: all 0.3s ease;
-}
-
-.profile-image:hover {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 15px 50px rgba(0,0,0,0.5) !important;
-}
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0a0a0a;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
+  overflow-x: hidden;
 }
 
-/* ========== ANIMASI TUTORIAL ========== */
-
-/* Animasi Fade In (muncul perlahan) */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Animasi Slide dari Kiri */
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
 }
 
-/* Animasi Slide dari Kanan */
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
 }
 
-/* Animasi Bounce (memantul) */
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
-/* Animasi Rotate (berputar) */
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Navigation Dots */
+.nav-dot:hover .nav-label {
+  opacity: 1;
 }
 
-/* Animasi Scale (membesar) */
-@keyframes scaleUp {
-  from {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+/* Typing Cursor Animation */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
-/* Animasi Glow (bercahaya) */
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(66, 153, 225, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(66, 153, 225, 0.8);
-  }
+/* Hero Button Hover */
+.hero-button:hover {
+  background-color: #fff;
+  color: #0a0a0a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255,255,255,0.1);
 }
 
-/* ========== CLASS UNTUK DIPAKAI ========== */
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-out;
+/* Skill Tags Hover */
+.skill-tag:hover {
+  background-color: #1a1a1a;
+  border-color: #444;
+  transform: translateY(-2px);
 }
 
-.animate-slide-left {
-  animation: slideInLeft 0.8s ease-out;
-}
-
-.animate-slide-right {
-  animation: slideInRight 0.8s ease-out;
-}
-
-.animate-bounce {
-  animation: bounce 2s infinite;
-}
-
-.animate-rotate {
-  animation: rotate 2s linear infinite;
-}
-
-.animate-scale {
-  animation: scaleUp 0.6s ease-out;
-}
-
-/* Hover Effects */
-.hover-grow {
-  transition: transform 0.3s ease;
-}
-
-.hover-grow:hover {
+/* About Image Hover */
+.about-image:hover {
+  filter: grayscale(0%);
   transform: scale(1.05);
 }
 
-.hover-lift {
-  transition: all 0.3s ease;
+.about-image:hover + .image-overlay {
+  opacity: 0;
 }
 
-.hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+/* Project Card Hover */
+.project-card:hover {
+  background-color: #1a1a1a;
+  border-color: #333;
+  transform: translateX(10px);
 }
 
-.hover-glow {
-  transition: all 0.3s ease;
+.project-card:hover .project-arrow {
+  transform: translateX(10px);
 }
 
-.hover-glow:hover {
-  animation: glow 1.5s infinite;
+/* Contact Button Hover */
+.contact-button:hover {
+  background-color: #667eea;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
 }
 
-/* Delay Animations */
-.delay-1 {
-  animation-delay: 0.2s;
-  animation-fill-mode: backwards;
+/* Social Links Hover */
+.social-link:hover {
+  color: #fff;
 }
 
-.delay-2 {
-  animation-delay: 0.4s;
-  animation-fill-mode: backwards;
+/* Fade In Animation on Scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.delay-3 {
-  animation-delay: 0.6s;
-  animation-fill-mode: backwards;
+/* Responsive */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 40px !important;
+  }
+  
+  .nav-dot {
+    display: none;
+  }
+  
+  div[style*="gridTemplateColumns: '1fr 1fr'"] {
+    grid-template-columns: 1fr !important;
+  }
 }

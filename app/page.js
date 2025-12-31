@@ -1,9 +1,25 @@
-// app/page.js - One Page Portfolio dengan Scroll Animation
+// app/page.js - Portfolio ala Jake Sinclair
 'use client';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
     const [activeSection, setActiveSection] = useState('home');
+    const [displayText, setDisplayText] = useState('');
+    const fullText = "Web Developer & Designer";
+
+    // Typing animation effect
+    useEffect(() => {
+        let i = 0;
+        const typingInterval = setInterval(() => {
+            if (i < fullText.length) {
+                setDisplayText(fullText.substring(0, i + 1));
+                i++;
+            } else {
+                clearInterval(typingInterval);
+            }
+        }, 100);
+        return () => clearInterval(typingInterval);
+    }, []);
 
     // Smooth scroll ke section
     const scrollToSection = (sectionId) => {
@@ -14,7 +30,7 @@ export default function Home() {
     // Detect section saat scroll
     useEffect(() => {
         const handleScroll = () => {
-            const sections = ['home', 'about', 'projects', 'contact'];
+            const sections = ['home', 'about', 'work', 'contact'];
             const current = sections.find(section => {
                 const element = document.getElementById(section);
                 if (element) {
@@ -30,153 +46,149 @@ export default function Home() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const projects = [
+        {
+            title: "TAG Toyota Palembang",
+            desc: "Website dealership Toyota dengan sistem booking service online",
+            tags: ["Next.js", "React", "TailwindCSS"],
+            link: "#"
+        },
+        {
+            title: "Hotel Sriwidjaya",
+            desc: "Platform booking hotel dengan fitur real-time availability",
+            tags: ["React", "Node.js", "MongoDB"],
+            link: "#"
+        },
+        {
+            title: "Portfolio Website",
+            desc: "Personal portfolio dengan animasi modern dan smooth transitions",
+            tags: ["Next.js", "CSS Animations"],
+            link: "#"
+        }
+    ];
+
     return (
-        <>
-            {/* FLOATING NAVIGATION */}
+        <div style={{
+            backgroundColor: '#0a0a0a',
+            color: '#ffffff',
+            minHeight: '100vh'
+        }}>
+            {/* MINIMALIST NAVIGATION */}
             <nav style={{
                 position: 'fixed',
-                top: '20px',
-                right: '20px',
+                right: '40px',
+                top: '50%',
+                transform: 'translateY(-50%)',
                 zIndex: 1000,
                 display: 'flex',
-                gap: '10px',
                 flexDirection: 'column',
-                backgroundColor: 'rgba(255,255,255,0.9)',
-                padding: '10px',
-                borderRadius: '50px',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                gap: '20px'
             }}>
-                {['home', 'about', 'projects', 'contact'].map((section) => (
+                {[
+                    { id: 'home', label: 'Home' },
+                    { id: 'about', label: 'About' },
+                    { id: 'work', label: 'Work' },
+                    { id: 'contact', label: 'Contact' }
+                ].map(({ id, label }) => (
                     <button
-                        key={section}
-                        onClick={() => scrollToSection(section)}
-                        className="hover-grow"
+                        key={id}
+                        onClick={() => scrollToSection(id)}
+                        className="nav-dot"
                         style={{
-                            width: '12px',
-                            height: '12px',
+                            position: 'relative',
+                            width: '10px',
+                            height: '10px',
                             borderRadius: '50%',
-                            border: 'none',
-                            backgroundColor: activeSection === section ? '#667eea' : '#ddd',
+                            border: '2px solid #fff',
+                            backgroundColor: activeSection === id ? '#fff' : 'transparent',
                             cursor: 'pointer',
                             transition: 'all 0.3s ease'
                         }}
-                        title={section.charAt(0).toUpperCase() + section.slice(1)}
-                    />
+                        aria-label={label}
+                    >
+                        <span style={{
+                            position: 'absolute',
+                            right: '20px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            whiteSpace: 'nowrap',
+                            opacity: 0,
+                            transition: 'opacity 0.3s ease',
+                            fontSize: '12px',
+                            pointerEvents: 'none'
+                        }} className="nav-label">
+                            {label}
+                        </span>
+                    </button>
                 ))}
             </nav>
 
-            <div className="scroll-indicator" style={{
-                position: 'fixed',
-                bottom: '30px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                zIndex: 1000,
-                display: activeSection === 'home' ? 'block' : 'none'
-            }}>
-                <div className="animate-bounce" style={{
-                    color: 'white',
-                    fontSize: '2em',
-                    cursor: 'pointer'
-                }} onClick={() => scrollToSection('about')}>
-                    ⬇️
-                </div>
-            </div>
-
-            {/* SECTION 1: HOME */}
+            {/* SECTION 1: HERO */}
             <section id="home" style={{
                 minHeight: '100vh',
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'center',
                 justifyContent: 'center',
-                padding: '20px',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                padding: '0 80px',
+                maxWidth: '1400px',
+                margin: '0 auto'
             }}>
-                <div 
-                    className="animate-scale profile-container"
-                    style={{
-                        position: 'relative',
-                        marginBottom: '30px'
-                    }}
-                >
-                    <img 
-                        src="/Me.jpeg"
-                        alt="Foto Profil"
-                        className="profile-image hover-float"
-                        style={{
-                            width: '200px',
-                            height: '200px',
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            border: '5px solid white',
-                            boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
-                        }}
-                    />
-                    <div className="profile-ring"></div>
-                </div>
-
-                <h1 className="animate-fade-in delay-1" 
-                    style={{
-                        fontSize: '3em', 
-                        color: 'white',
+                <div style={{ maxWidth: '800px' }}>
+                    <p style={{
+                        fontSize: '18px',
+                        color: '#888',
+                        marginBottom: '20px',
+                        letterSpacing: '2px'
+                    }}>
+                        HI, MY NAME IS
+                    </p>
+                    <h1 style={{
+                        fontSize: 'clamp(40px, 8vw, 80px)',
+                        fontWeight: '700',
                         marginBottom: '10px',
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                        textAlign: 'center'
+                        lineHeight: '1.1'
                     }}>
-                    👋 Halo, Saya Veraldo
-                </h1>
-                
-                <p className="animate-fade-in delay-2" 
-                    style={{
-                        fontSize: '1.3em', 
-                        color: '#f0f0f0',
-                        marginBottom: '40px',
-                        textAlign: 'center'
+                        Veraldo
+                    </h1>
+                    <h2 style={{
+                        fontSize: 'clamp(30px, 6vw, 60px)',
+                        fontWeight: '700',
+                        color: '#666',
+                        marginBottom: '30px',
+                        minHeight: '80px'
                     }}>
-                    Web Developer | Designer | Mobile Developer
-                </p>
-                
-                <div className="animate-fade-in delay-3" 
-                    style={{
-                        marginTop: '20px',
-                        display: 'flex',
-                        gap: '15px',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center'
+                        {displayText}
+                        <span style={{
+                            animation: 'blink 1s infinite',
+                            marginLeft: '5px'
+                        }}>|</span>
+                    </h2>
+                    <p style={{
+                        fontSize: '18px',
+                        color: '#888',
+                        lineHeight: '1.8',
+                        maxWidth: '600px',
+                        marginBottom: '40px'
                     }}>
-                    <button 
-                        className="hover-lift" 
-                        onClick={() => scrollToSection('projects')}
+                        Saya seorang mahasiswa Universitas Multi Data Palembang yang passionate 
+                        dalam menciptakan pengalaman digital yang indah dan fungsional.
+                    </p>
+                    <button
+                        onClick={() => scrollToSection('work')}
                         style={{
-                            padding: '15px 30px',
-                            fontSize: '1.1em',
-                            backgroundColor: 'white',
-                            color: '#667eea',
-                            border: 'none',
-                            borderRadius: '50px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
-                        }}
-                    >
-                        📂 Lihat Project
-                    </button>
-                    
-                    <button 
-                        className="hover-grow" 
-                        onClick={() => scrollToSection('contact')}
-                        style={{
-                            padding: '15px 30px',
-                            fontSize: '1.1em',
+                            padding: '18px 40px',
+                            fontSize: '16px',
                             backgroundColor: 'transparent',
-                            color: 'white',
-                            border: '2px solid white',
-                            borderRadius: '50px',
+                            color: '#fff',
+                            border: '2px solid #fff',
+                            borderRadius: '4px',
                             cursor: 'pointer',
-                            fontWeight: 'bold'
+                            transition: 'all 0.3s ease',
+                            letterSpacing: '1px'
                         }}
+                        className="hero-button"
                     >
-                        📧 Hubungi Saya
+                        VIEW MY WORK
                     </button>
                 </div>
             </section>
@@ -186,114 +198,200 @@ export default function Home() {
                 minHeight: '100vh',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                padding: '80px 20px',
-                backgroundColor: '#f7fafc'
+                padding: '100px 80px',
+                maxWidth: '1400px',
+                margin: '0 auto'
             }}>
-                <div style={{maxWidth: '800px', width: '100%'}}>
-                    <h1 className="scroll-reveal" style={{
-                        fontSize: '2.5em', 
-                        marginBottom: '30px',
-                        color: '#333',
-                        textAlign: 'center'
-                    }}>
-                        Tentang Saya
-                    </h1>
-                    
-                    <div className="scroll-reveal delay-1" style={{
-                        padding: '30px',
-                        backgroundColor: 'white',
-                        borderRadius: '12px',
-                        marginBottom: '40px',
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                    }}>
-                        <p style={{fontSize: '1.2em', lineHeight: '1.8', color: '#444'}}>
-                            Halo! Nama saya <strong>Veraldo</strong>, saya adalah Mahasiswa Universitas Multi Data Palembang, dan ini adalah fortofolio saya sebagai dasar saya dalam mempelajari web dengan Next.js.
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '80px',
+                    alignItems: 'center'
+                }}>
+                    <div>
+                        <p style={{
+                            fontSize: '14px',
+                            color: '#888',
+                            marginBottom: '10px',
+                            letterSpacing: '2px'
+                        }}>
+                            ABOUT ME
                         </p>
-                    </div>
-                    
-                    <div className="scroll-reveal delay-2">
-                        <h2 style={{fontSize: '2em', marginBottom: '20px', color: '#333', textAlign: 'center'}}>
-                            Skills
+                        <h2 style={{
+                            fontSize: 'clamp(32px, 5vw, 48px)',
+                            fontWeight: '700',
+                            marginBottom: '30px'
+                        }}>
+                            Passionate about creating
                         </h2>
+                        <p style={{
+                            fontSize: '16px',
+                            color: '#aaa',
+                            lineHeight: '1.8',
+                            marginBottom: '30px'
+                        }}>
+                            Saya adalah mahasiswa yang sedang mempelajari web development dengan fokus 
+                            pada teknologi modern seperti React, Next.js, dan Flutter. Saya percaya bahwa 
+                            design yang baik adalah design yang tidak hanya terlihat indah, tetapi juga 
+                            mudah digunakan.
+                        </p>
                         <div style={{
-                            display: 'grid', 
-                            gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', 
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(2, 1fr)',
                             gap: '15px'
                         }}>
-                            {['💻 HTML & CSS', '⚛️ React', '🚀 Next.js', '🎨 UI/UX Design', '⚛ Flutter'].map((skill, i) => (
-                                <div key={i} className="hover-lift scroll-reveal" style={{
-                                    padding: '20px',
-                                    backgroundColor: 'white',
-                                    borderRadius: '8px',
+                            {['Next.js', 'React', 'Flutter', 'UI/UX', 'HTML/CSS', 'JavaScript'].map((skill) => (
+                                <div key={skill} style={{
+                                    padding: '12px 20px',
+                                    backgroundColor: '#111',
+                                    border: '1px solid #222',
+                                    borderRadius: '4px',
+                                    fontSize: '14px',
                                     textAlign: 'center',
-                                    color: '#333',
-                                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                                    animationDelay: `${i * 0.1}s`
-                                }}>
+                                    transition: 'all 0.3s ease'
+                                }} className="skill-tag">
                                     {skill}
                                 </div>
                             ))}
                         </div>
                     </div>
+                    <div style={{
+                        position: 'relative',
+                        aspectRatio: '1',
+                        maxWidth: '500px'
+                    }}>
+                        <div style={{
+                            width: '100%',
+                            height: '100%',
+                            border: '2px solid #333',
+                            borderRadius: '8px',
+                            overflow: 'hidden',
+                            position: 'relative'
+                        }}>
+                            <img 
+                                src="/Me.jpeg"
+                                alt="Veraldo"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    filter: 'grayscale(100%)',
+                                    transition: 'all 0.5s ease'
+                                }}
+                                className="about-image"
+                            />
+                            <div style={{
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                                transition: 'opacity 0.5s ease'
+                            }} className="image-overlay"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* SECTION 3: PROJECTS */}
-            <section id="projects" style={{
+            {/* SECTION 3: WORK */}
+            <section id="work" style={{
                 minHeight: '100vh',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '80px 20px',
-                background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                padding: '100px 80px',
+                maxWidth: '1400px',
+                margin: '0 auto'
             }}>
-                <div style={{maxWidth: '1000px', width: '100%'}}>
-                    <h1 className="scroll-reveal" style={{
-                        fontSize: '2.5em', 
-                        marginBottom: '50px',
-                        color: 'white',
-                        textAlign: 'center',
-                        textShadow: '2px 2px 4px rgba(0,0,0,0.2)'
-                    }}>
-                        Project Saya
-                    </h1>
-                    
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                        gap: '30px'
-                    }}>
-                        {['TAG Toyota Palembang', 'Hotel Sriwidjaya'].map((num) => (
-                            <div key={num} className="hover-lift scroll-reveal" style={{
-                                padding: '30px',
-                                backgroundColor: 'white',
-                                borderRadius: '15px',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-                                animationDelay: `${num * 0.2}s`
-                            }}>
+                <p style={{
+                    fontSize: '14px',
+                    color: '#888',
+                    marginBottom: '10px',
+                    letterSpacing: '2px'
+                }}>
+                    RECENT WORK
+                </p>
+                <h2 style={{
+                    fontSize: 'clamp(32px, 5vw, 48px)',
+                    fontWeight: '700',
+                    marginBottom: '60px'
+                }}>
+                    Projects I've built
+                </h2>
+
+                <div style={{
+                    display: 'grid',
+                    gap: '40px'
+                }}>
+                    {projects.map((project, index) => (
+                        <a
+                            key={index}
+                            href={project.link}
+                            style={{
+                                textDecoration: 'none',
+                                color: 'inherit'
+                            }}
+                        >
+                            <div 
+                                className="project-card"
+                                style={{
+                                    padding: '40px',
+                                    backgroundColor: '#111',
+                                    border: '1px solid #222',
+                                    borderRadius: '8px',
+                                    transition: 'all 0.4s ease',
+                                    cursor: 'pointer'
+                                }}
+                            >
                                 <div style={{
-                                    width: '100%',
-                                    height: '150px',
-                                    backgroundColor: '#e2e8f0',
-                                    borderRadius: '10px',
-                                    marginBottom: '20px',
                                     display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    fontSize: '3em'
+                                    justifyContent: 'space-between',
+                                    alignItems: 'flex-start',
+                                    marginBottom: '20px'
                                 }}>
-                                    📁
+                                    <div>
+                                        <h3 style={{
+                                            fontSize: '28px',
+                                            fontWeight: '600',
+                                            marginBottom: '15px'
+                                        }}>
+                                            {project.title}
+                                        </h3>
+                                        <p style={{
+                                            fontSize: '16px',
+                                            color: '#888',
+                                            lineHeight: '1.6',
+                                            maxWidth: '600px'
+                                        }}>
+                                            {project.desc}
+                                        </p>
+                                    </div>
+                                    <div style={{
+                                        fontSize: '24px',
+                                        transition: 'transform 0.3s ease'
+                                    }} className="project-arrow">
+                                        →
+                                    </div>
                                 </div>
-                                <h3 style={{fontSize: '1.5em', marginBottom: '10px', color: '#333'}}>
-                                    Project {num}
-                                </h3>
-                                <p style={{color: '#666', lineHeight: '1.6'}}>
-                                    Deskripsi singkat tentang project ini. Teknologi yang digunakan dan hasil yang dicapai.
-                                </p>
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '10px',
+                                    flexWrap: 'wrap'
+                                }}>
+                                    {project.tags.map((tag) => (
+                                        <span key={tag} style={{
+                                            padding: '6px 12px',
+                                            fontSize: '12px',
+                                            backgroundColor: '#0a0a0a',
+                                            border: '1px solid #333',
+                                            borderRadius: '4px',
+                                            color: '#888'
+                                        }}>
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
-                        ))}
-                    </div>
+                        </a>
+                    ))}
                 </div>
             </section>
 
@@ -303,60 +401,87 @@ export default function Home() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '80px 20px',
-                backgroundColor: '#1a202c'
+                padding: '100px 80px',
+                maxWidth: '1400px',
+                margin: '0 auto'
             }}>
-                <div style={{maxWidth: '600px', width: '100%', textAlign: 'center'}}>
-                    <h1 className="scroll-reveal" style={{
-                        fontSize: '2.5em', 
-                        marginBottom: '20px',
-                        color: 'white'
+                <div style={{ textAlign: 'center', maxWidth: '600px' }}>
+                    <p style={{
+                        fontSize: '14px',
+                        color: '#888',
+                        marginBottom: '10px',
+                        letterSpacing: '2px'
                     }}>
-                        Kontak Saya
-                    </h1>
-                    
-                    <p className="scroll-reveal delay-1" style={{
-                        fontSize: '1.2em', 
-                        color: '#a0aec0', 
-                        marginBottom: '40px'
-                    }}>
-                        Jangan ragu untuk menghubungi saya!
+                        GET IN TOUCH
                     </p>
-                    
-                    <div className="scroll-reveal delay-2 hover-lift" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '20px',
-                        padding: '30px',
-                        backgroundColor: 'white',
-                        borderRadius: '12px',
-                        boxShadow: '0 10px 40px rgba(0,0,0,0.3)'
+                    <h2 style={{
+                        fontSize: 'clamp(32px, 5vw, 48px)',
+                        fontWeight: '700',
+                        marginBottom: '30px'
                     }}>
-                        <img 
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt5j20cy6nP068DPAQvzLz2dFjFdzkk5DwEA&s" 
-                            alt="Gmail Icon" 
-                            style={{
-                                width: "50px", 
-                                height: "auto",
-                                backgroundColor: "white",
-                                padding: "8px",
-                                borderRadius: "8px",
-                                boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
-                            }} 
-                        />
-                        <div style={{textAlign: 'left'}}>
-                            <p style={{fontSize: '0.9em', color: '#718096', marginBottom: '5px'}}>
-                                Email
-                            </p>
-                            <a style={{fontSize: '1.1em', fontWeight: 'bold', color:'#333'}} href="mailto:veraldo24092005@gmail.com" target="_blank"  rel="noopener noreferrer">
-                                veraldo24092005@gmail.com
+                        Let's work together
+                    </h2>
+                    <p style={{
+                        fontSize: '18px',
+                        color: '#888',
+                        lineHeight: '1.8',
+                        marginBottom: '50px'
+                    }}>
+                        Punya project atau ide? Saya selalu terbuka untuk kesempatan 
+                        baru dan kolaborasi yang menarik.
+                    </p>
+                    <a
+                        href="mailto:veraldo24092005@gmail.com"
+                        style={{
+                            display: 'inline-block',
+                            padding: '18px 40px',
+                            fontSize: '16px',
+                            backgroundColor: '#fff',
+                            color: '#0a0a0a',
+                            border: 'none',
+                            borderRadius: '4px',
+                            textDecoration: 'none',
+                            fontWeight: '600',
+                            letterSpacing: '1px',
+                            transition: 'all 0.3s ease'
+                        }}
+                        className="contact-button"
+                    >
+                        SAY HELLO
+                    </a>
+
+                    <div style={{
+                        marginTop: '60px',
+                        display: 'flex',
+                        gap: '30px',
+                        justifyContent: 'center'
+                    }}>
+                        {[
+                            { name: 'GitHub', url: 'https://github.com' },
+                            { name: 'LinkedIn', url: 'https://linkedin.com' },
+                            { name: 'Instagram', url: 'https://instagram.com' }
+                        ].map((social) => (
+                            <a
+                                key={social.name}
+                                href={social.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    fontSize: '14px',
+                                    color: '#888',
+                                    textDecoration: 'none',
+                                    transition: 'color 0.3s ease',
+                                    letterSpacing: '1px'
+                                }}
+                                className="social-link"
+                            >
+                                {social.name}
                             </a>
-                        </div>
+                        ))}
                     </div>
 
                 </div>
             </section>
-        </>
+        </div>
     );
 }
