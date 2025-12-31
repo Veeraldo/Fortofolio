@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 export default function Home() {
     const [activeSection, setActiveSection] = useState('home');
     const [displayText, setDisplayText] = useState('');
-    const fullText = "Web Developer & Designer";
+    const fullText = "Web & Mobile Developer | Designer";
 
     // Typing animation effect
     useEffect(() => {
@@ -48,23 +48,17 @@ export default function Home() {
 
     const projects = [
         {
-            title: "TAG Toyota Palembang",
-            desc: "Website dealership Toyota dengan sistem booking service online",
-            tags: ["Next.js", "React", "TailwindCSS"],
-            link: "#"
+            title: "Tunas Auto Graha Toyota Palembang",
+            desc: "Aplikasi Mobile untuk divisi Komunikasi dan Marketing Tunas Auto Graha",
+            tags: ["Flutter", "Firebase", "Dart"],
+            link: "https://www.instagram.com/toyota.tunasautograha/?hl=en"
         },
         {
             title: "Hotel Sriwidjaya",
-            desc: "Platform booking hotel dengan fitur real-time availability",
-            tags: ["React", "Node.js", "MongoDB"],
+            desc: "Design Website untuk Hotel Sriwidjaya Palembang",
+            tags: ["Figma", "UI/UX", "Design"],
             link: "#"
         },
-        {
-            title: "Portfolio Website",
-            desc: "Personal portfolio dengan animasi modern dan smooth transitions",
-            tags: ["Next.js", "CSS Animations"],
-            link: "#"
-        }
     ];
 
     return (
@@ -140,7 +134,7 @@ export default function Home() {
                         marginBottom: '20px',
                         letterSpacing: '2px'
                     }}>
-                        HI, MY NAME IS
+                        HI, I'M
                     </p>
                     <h1 style={{
                         fontSize: 'clamp(40px, 8vw, 80px)',
@@ -170,7 +164,7 @@ export default function Home() {
                         maxWidth: '600px',
                         marginBottom: '40px'
                     }}>
-                        Saya seorang mahasiswa Universitas Multi Data Palembang yang passionate 
+                        Saya seorang mahasiswa Universitas Multi Data Palembang yang tertarik 
                         dalam menciptakan pengalaman digital yang indah dan fungsional.
                     </p>
                     <button
@@ -231,10 +225,9 @@ export default function Home() {
                             marginBottom: '30px'
                         }}>
                             Saya adalah mahasiswa yang sedang mempelajari web development dengan fokus 
-                            pada teknologi modern seperti React, Next.js, dan Flutter. Saya percaya bahwa 
-                            design yang baik adalah design yang tidak hanya terlihat indah, tetapi juga 
-                            mudah digunakan.
+                            pada teknologi modern seperti React, Next.js, dan Flutter. Simply lovely.
                         </p>
+                        
                         <div style={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(2, 1fr)',
@@ -254,12 +247,15 @@ export default function Home() {
                                 </div>
                             ))}
                         </div>
+                        
                     </div>
+                    
                     <div style={{
                         position: 'relative',
                         aspectRatio: '1',
                         maxWidth: '500px'
                     }}>
+                        
                         <div style={{
                             width: '100%',
                             height: '100%',
@@ -293,6 +289,8 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+            
+            
 
             {/* SECTION 3: WORK */}
             <section id="work" style={{
@@ -457,9 +455,9 @@ export default function Home() {
                         justifyContent: 'center'
                     }}>
                         {[
-                            { name: 'GitHub', url: 'https://github.com' },
-                            { name: 'LinkedIn', url: 'https://linkedin.com' },
-                            { name: 'Instagram', url: 'https://instagram.com' }
+                            { name: 'GitHub', url: 'https://github.com/Veeraldo' },
+                            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/veraldo?utm_source=share_via&utm_content=profile&utm_medium=member_android' },
+                            { name: 'Instagram', url: 'https://www.instagram.com/veerldo?igsh=empqd2tleXlrOXRh' }
                         ].map((social) => (
                             <a
                                 key={social.name}
