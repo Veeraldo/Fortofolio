@@ -1,4 +1,3 @@
-// app/page.js - Portfolio ala Jake Sinclair
 'use client';
 import { useEffect, useState } from 'react';
 
@@ -6,6 +5,30 @@ export default function Home() {
     const [activeSection, setActiveSection] = useState('home');
     const [displayText, setDisplayText] = useState('');
     const fullText = "Web & Mobile Developer | Designer";
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+    
+
+    // SEMUA useEffect HARUS DI ATAS, SEBELUM CONDITIONAL RETURN!
+    
+    // Loading effect
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 2000);
+    }, []);
+
+   
+
+    // Scroll progress effect
+    useEffect(() => {
+        const handleScrollProgress = () => {
+            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            setScrollProgress(progress);
+        };
+        
+        window.addEventListener('scroll', handleScrollProgress);
+        return () => window.removeEventListener('scroll', handleScrollProgress);
+    }, []);
 
     // Typing animation effect
     useEffect(() => {
@@ -20,12 +43,6 @@ export default function Home() {
         }, 100);
         return () => clearInterval(typingInterval);
     }, []);
-
-    // Smooth scroll ke section
-    const scrollToSection = (sectionId) => {
-        const element = document.getElementById(sectionId);
-        element?.scrollIntoView({ behavior: 'smooth' });
-    };
 
     // Detect section saat scroll
     useEffect(() => {
@@ -46,12 +63,19 @@ export default function Home() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Smooth scroll ke section
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        element?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     const projects = [
         {
             title: "Tunas Auto Graha Toyota Palembang",
             desc: "Aplikasi Mobile untuk divisi Komunikasi dan Marketing Tunas Auto Graha",
             tags: ["Flutter", "Firebase", "Dart"],
-            link: "https://www.instagram.com/toyota.tunasautograha/?hl=en"
+            link: "https://www.instagram.com/toyota.tunasautograha/?hl=en",
+            image: "/Me.jpeg"
         },
         {
             title: "Hotel Sriwidjaya",
@@ -61,12 +85,53 @@ export default function Home() {
         },
     ];
 
+    // LOADING SCREEN - Setelah semua hooks
+    if (isLoading) {
+        return (
+            <div style={{
+                width: '100vw',
+                height: '100vh',
+                backgroundColor: '#0a0a0a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+            }}>
+                <h1 style={{
+                    fontSize: '60px',
+                    fontWeight: '700',
+                    color: '#fff'
+                }}>
+                    V
+                </h1>
+                <div style={{
+                    width: '50px',
+                    height: '3px',
+                    backgroundColor: '#667eea',
+                    marginTop: '20px'
+                }} className="loading-bar" />
+            </div>
+        );
+    }
+
     return (
         <div style={{
             backgroundColor: '#0a0a0a',
             color: '#ffffff',
             minHeight: '100vh'
         }}>
+            {/* SCROLL PROGRESS BAR */}
+            <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: `${scrollProgress}%`,
+                height: '3px',
+                backgroundColor: '#667eea',
+                zIndex: 9999,
+                transition: 'width 0.1s ease'
+            }} />
+
             {/* MINIMALIST NAVIGATION */}
             <nav style={{
                 position: 'fixed',
@@ -225,7 +290,7 @@ export default function Home() {
                             marginBottom: '30px'
                         }}>
                             Saya adalah mahasiswa yang sedang mempelajari web development dengan fokus 
-                            pada teknologi modern seperti React, Next.js, dan Flutter. Simply lovely.
+                            pada teknologi modern seperti React, Next.js, dan Flutter.
                         </p>
                         
                         <div style={{
@@ -247,7 +312,6 @@ export default function Home() {
                                 </div>
                             ))}
                         </div>
-                        
                     </div>
                     
                     <div style={{
@@ -255,7 +319,6 @@ export default function Home() {
                         aspectRatio: '1',
                         maxWidth: '500px'
                     }}>
-                        
                         <div style={{
                             width: '100%',
                             height: '100%',
@@ -289,8 +352,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            
-            
 
             {/* SECTION 3: WORK */}
             <section id="work" style={{
@@ -323,6 +384,8 @@ export default function Home() {
                         <a
                             key={index}
                             href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{
                                 textDecoration: 'none',
                                 color: 'inherit'
@@ -456,8 +519,8 @@ export default function Home() {
                     }}>
                         {[
                             { name: 'GitHub', url: 'https://github.com/Veeraldo' },
-                            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/veraldo?utm_source=share_via&utm_content=profile&utm_medium=member_android' },
-                            { name: 'Instagram', url: 'https://www.instagram.com/veerldo?igsh=empqd2tleXlrOXRh' }
+                            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/veraldo' },
+                            { name: 'Instagram', url: 'https://www.instagram.com/veerldo' }
                         ].map((social) => (
                             <a
                                 key={social.name}
@@ -477,9 +540,34 @@ export default function Home() {
                             </a>
                         ))}
                     </div>
-
                 </div>
             </section>
+
+            {/* BACK TO TOP BUTTON */}
+            {scrollProgress > 20 && (
+                <button
+                    onClick={() => scrollToSection('home')}
+                    style={{
+                        position: 'fixed',
+                        bottom: '40px',
+                        left: '40px',
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        backgroundColor: '#fff',
+                        color: '#0a0a0a',
+                        border: 'none',
+                        fontSize: '20px',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 20px rgba(255,255,255,0.2)',
+                        transition: 'all 0.3s ease',
+                        zIndex: 999
+                    }}
+                    className="back-to-top"
+                >
+                    ↑
+                </button>
+            )}
         </div>
     );
 }
